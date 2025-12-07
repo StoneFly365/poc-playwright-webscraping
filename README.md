@@ -54,7 +54,7 @@ Esto hará:
 
 ### 4️⃣ Extensión VSCode para visualizar la base de datos
 
-[sqlite-viewer](https://marketplace.visualstudio.com/items?itemName=qwtel.sqlite-viewer)
+- [sqlite-viewer](https://marketplace.visualstudio.com/items?itemName=qwtel.sqlite-viewer)
 
 ### 5️⃣ 📦 Estructura del proyecto
 
