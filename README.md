@@ -59,7 +59,7 @@ Esto hará:
 ### 5️⃣ 📦 Estructura del proyecto
 
 📂 proyecto
- ├── app.mjs              # Script principal del scraper
- ├── videos.db            # Base SQLite generada automáticamente
- ├── package.json         # Dependencias y scripts
- └── README.md            # Documentación
+- app.mjs              # Script principal del scraper
+- videos.db            # Base SQLite generada automáticamente
+- package.json         # Dependencias y scripts
+- README.md            # Documentación
