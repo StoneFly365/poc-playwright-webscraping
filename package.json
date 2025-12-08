@@ -6,7 +6,7 @@
     "start": "node app.mjs"
   },
   "dependencies": {
-    "playwright-core": "1.38.0",
+    "playwright": "^1.57.0",
     "sqlite": "^5.1.1",
     "sqlite3": "^5.1.7"
   }
