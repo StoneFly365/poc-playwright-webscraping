@@ -3,11 +3,15 @@
   "version": "1.0.0",
   "type": "module",
   "scripts": {
-    "start": "node app.mjs"
+    "start": "node app.mjs",
+    "test": "playwright test"
   },
   "dependencies": {
     "playwright": "^1.57.0",
     "sqlite": "^5.1.1",
     "sqlite3": "^5.1.7"
+  },
+  "devDependencies": {
+    "@playwright/test": "^1.57.0"
   }
 }

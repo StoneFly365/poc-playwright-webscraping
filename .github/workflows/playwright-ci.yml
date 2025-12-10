@@ -1,4 +1,4 @@
-name: Playwright Tests
+name: Playwright Tests + Scraping
 
 on:
   push:
@@ -7,7 +7,7 @@ on:
     branches: [ "main" ]
 
 jobs:
-  test:
+  test-and-scrape:
     runs-on: ubuntu-latest
 
     steps:
@@ -34,11 +34,26 @@ jobs:
       - name: Install Playwright browsers
         run: npx playwright install --with-deps
 
-      - name: Run script
+      # -------------------------------
+      # 1) Ejecutar tests Playwright
+      # -------------------------------
+      - name: Run Playwright tests
+        run: npx playwright test
+        env:
+          CI: true
+
+      # -------------------------------
+      # 2) Ejecutar tu script de scraping
+      #    Solo se ejecuta si los tests pasan
+      # -------------------------------
+      - name: Run scraping script
         run: node app.mjs
         env:
           CI: true
 
+      # -------------------------------
+      # 3) Subir reporte como artefacto
+      # -------------------------------
       - name: Upload Playwright report as artifact
         if: always()
         uses: actions/upload-artifact@v4
