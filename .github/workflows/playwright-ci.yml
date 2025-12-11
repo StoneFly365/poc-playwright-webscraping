@@ -8,7 +8,7 @@ on:
 
 jobs:
   test-and-scrape:
-    name: Test and scrape (${ { matrix.os } })
+    name: Test and scrape (${{ matrix.os }})
     strategy:
       fail-fast: false
       matrix:
@@ -37,15 +37,17 @@ jobs:
       - name: Install dependencies
         run: npm install
 
-      - name: Install Playwright browsers
+      - name: Install Playwright browsers (Linux / macOS)
+        if: ${{ runner.os != 'Windows' }}
         run: |
-          # Playwright browser installation works on all runners; --with-deps
-          # installs additional system dependencies on Linux/macOS.
-          if [ "${{ matrix.os }}" = "ubuntu-latest" ] || [ "${{ matrix.os }}" = "macos-latest" ]; then
-            npx playwright install --with-deps
-          else
-            npx playwright install
-          fi
+          # On Linux/macOS install additional system deps
+          npx playwright install --with-deps
+
+      - name: Install Playwright browsers (Windows)
+        if: ${{ runner.os == 'Windows' }}
+        run: |
+          # Windows runners should run the standard install
+          npx playwright install
 
       # -------------------------------
       # 1) Ejecutar tests Playwright
