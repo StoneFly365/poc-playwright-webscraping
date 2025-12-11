@@ -8,7 +8,13 @@ on:
 
 jobs:
   test-and-scrape:
-    runs-on: ubuntu-latest
+    name: Test and scrape (${ { matrix.os } })
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu-latest, macos-latest, windows-latest]
+
+    runs-on: ${{ matrix.os }}
 
     steps:
       - name: Checkout repository
@@ -24,15 +30,22 @@ jobs:
         with:
           path: |
             **/node_modules
-          key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
+          key: ${{ matrix.os }}-node-${{ hashFiles('**/package-lock.json') }}
           restore-keys: |
-            ${{ runner.os }}-node-
+            ${{ matrix.os }}-node-
 
       - name: Install dependencies
         run: npm install
 
       - name: Install Playwright browsers
-        run: npx playwright install --with-deps
+        run: |
+          # Playwright browser installation works on all runners; --with-deps
+          # installs additional system dependencies on Linux/macOS.
+          if [ "${{ matrix.os }}" = "ubuntu-latest" ] || [ "${{ matrix.os }}" = "macos-latest" ]; then
+            npx playwright install --with-deps
+          else
+            npx playwright install
+          fi
 
       # -------------------------------
       # 1) Ejecutar tests Playwright
@@ -58,6 +71,6 @@ jobs:
         if: always()
         uses: actions/upload-artifact@v4
         with:
-          name: playwright-report
+          name: playwright-report-${{ matrix.os }}
           path: playwright-report/
           retention-days: 7
